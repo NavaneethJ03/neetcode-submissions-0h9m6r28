@@ -1,0 +1,19 @@
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        # HierHolzer's Algorithm 
+        graph = defaultdict(list)
+        # we sort the edges in reverse order to pop the least from the end
+        for src , dst in sorted(tickets , reverse = True):
+            graph[src].append(dst)
+
+        stk = ["JFK"]
+        res = []
+
+        while stk:
+            curr = stk[-1]
+            if not graph[curr]:
+                res.append(stk.pop())
+            else:
+                stk.append(graph[curr].pop())
+
+        return res[::-1]
